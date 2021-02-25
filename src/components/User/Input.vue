@@ -4,15 +4,15 @@
         <div class="upper-input">
             <div class="input-flex">
                 <label>Vardas</label>
-                <input v-model="name" required class="input upper">
+                <input maxlength="40" v-model="name" required class="input upper">
             </div>
             <div class="input-flex">
                 <label>Pavardė</label>
-                <input v-model="surname" required class="input upper">
+                <input maxlength="40" v-model="surname" required class="input upper">
             </div>
             <div class="input-flex">
                 <label>E-paštas</label>
-                <input v-model="email" type="email" required class="input upper">
+                <input maxlength="60" v-model="email" type="email" required class="input upper">
             </div>
         </div>
         <label>Atsiliepimas</label>
@@ -28,6 +28,8 @@ import Vue from 'vue';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 
+const url = `https://akademija.teltonika.lt/guestbook/index.php`
+
 Vue.use(VueAxios,axios)
 
 export default {
@@ -42,12 +44,21 @@ export default {
     },
     methods: {
         onSubmit() {
-            Vue.axios.post(`https://akademija.teltonika.lt/guestbook/index.php/reviews?last_name=${this.surname}&first_name=${this.name}&email=${this.email}&content=${this.content}`)
+            Vue.axios.post(url + `/reviews`, {
+                last_name: this.surname,
+                first_name: this.name,
+                email: this.email,
+                content: this.content})
             .then((resp) => {
                 console.log(resp)
+                if(localStorage.email !== this.email) {
+                    localStorage.removeItem('rated')
+                }
                 localStorage.name = this.name
                 localStorage.surname = this.surname
                 localStorage.email = this.email
+                this.content=""
+                this.$emit('inputSubmitted')
             })
             return false;
         }

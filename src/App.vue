@@ -1,18 +1,13 @@
 <template>
   <div id="app">
-      <nav>
-        <router-link to="/">Home</router-link>
-        <router-link to="/admin">Login</router-link>
-      </nav>
-    <router-link></router-link>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
+
 export default {
-  name: 'App',
-  components: {
-  }
+  name: 'app'
 }
 </script>
 
@@ -24,6 +19,10 @@ export default {
     line-height: 50px;
     border-bottom: 2px solid #a8a8a8;
     margin-bottom: 50px;
+  }
+  .box-shadow {
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      background-color: #ffffff;
   }
   #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
